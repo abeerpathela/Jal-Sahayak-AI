@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/* ── Custom Theme Tokens (Tailwind v4) ─────────────────────────────── */
+@theme {
+  --color-govBlue:       #1b4d89;
+  --color-govLight:      #f3f4f6;
+  --color-govDark:       #0f2f57;
+  --color-govAccent:     #2979d0;
+  --font-family-sans:    'Inter', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #f3f4f6;
+  color: #1a1a2e;
+}
+
+/* ── Reusable Utilities ────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--color-govBlue);
+  color: white;
+  font-weight: 600;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+  font-size: 0.875rem;
+}
+.btn-primary:hover {
+  background-color: var(--color-govDark);
+  box-shadow: 0 4px 14px rgba(27, 77, 137, 0.35);
+}
+.btn-primary:active { transform: scale(0.98); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--color-govBlue);
+  font-weight: 600;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--color-govBlue);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.875rem;
+}
+.btn-outline:hover {
+  background-color: var(--color-govBlue);
+  color: white;
+}
+
+/* ── Card ──────────────────────────────────────────────────────────── */
+.card {
+  background: white;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+  transition: box-shadow 0.2s;
+}
+.card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+
+/* ── Chat Bubbles ──────────────────────────────────────────────────── */
+.chat-bubble {
+  max-width: 80%;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+  font-size: 0.875rem;
+}
+.chat-bubble-user {
+  background-color: var(--color-govBlue);
+  color: white;
+  border-bottom-right-radius: 0.25rem;
+  align-self: flex-end;
+}
+.chat-bubble-ai {
+  background-color: white;
+  color: #1f2937;
+  border-bottom-left-radius: 0.25rem;
+  border: 1px solid #e5e7eb;
+  align-self: flex-start;
+}
+.chat-bubble-respondent {
+  background-color: #1e3a5f;
+  color: white;
+  border-bottom-right-radius: 0.25rem;
+  align-self: flex-end;
+}
+
+/* ── Badge ─────────────────────────────────────────────────────────── */
+.badge-HIGH    { background: #fef2f2; color: #b91c1c; border: 1px solid #fca5a5; }
+.badge-MEDIUM  { background: #fffbeb; color: #b45309; border: 1px solid #fcd34d; }
+.badge-LOW     { background: #f0fdf4; color: #15803d; border: 1px solid #86efac; }
+.badge-OPEN        { background: #eff6ff; color: #1d4ed8; }
+.badge-IN_PROGRESS { background: #f5f3ff; color: #7c3aed; }
+.badge-RESOLVED    { background: #f9fafb; color: #4b5563; }
+.badge-REOPENED    { background: #fff7ed; color: #c2410c; }
+
+/* ── Spinner ───────────────────────────────────────────────────────── */
+.spinner {
+  width: 3rem; height: 3rem;
+  border: 4px solid #e5e7eb;
+  border-top-color: var(--color-govBlue);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Pulse dot ─────────────────────────────────────────────────────── */
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.pulse-dot { animation: pulse 1.5s ease-in-out infinite; }
+
+/* ── Scrollbar ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a1a1a1; }
