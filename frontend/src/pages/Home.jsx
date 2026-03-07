@@ -93,131 +93,52 @@ const Home = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#060f1e', fontFamily: "'Inter', system-ui, sans-serif" }}>
+    <div className="min-h-screen bg-[#060f1e] font-sans">
       <Navbar />
 
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section style={{
-        position: 'relative', overflow: 'hidden',
-        minHeight: '92vh',
-        display: 'flex', alignItems: 'center',
-        background: 'linear-gradient(145deg, #060f1e 0%, #0a1e3d 45%, #0d2a52 100%)',
-      }}>
+      <section className="relative overflow-hidden min-h-[92vh] flex items-center bg-gradient-to-br from-[#060f1e] via-[#0a1e3d] to-[#0d2a52]">
         {/* Animated grid background */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: `
-            linear-gradient(rgba(41,121,208,0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(41,121,208,0.05) 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px',
-          pointerEvents: 'none',
-        }} />
+        <div className="absolute inset-0 pointer-events-none opacity-20" 
+             style={{ backgroundImage: 'linear-gradient(rgba(41,121,208,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(41,121,208,0.1) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
 
         {/* Radial glow accents */}
-        <div style={{
-          position: 'absolute', top: '-10rem', right: '-5rem',
-          width: '45rem', height: '45rem',
-          background: 'radial-gradient(circle, rgba(41,121,208,0.12) 0%, transparent 65%)',
-          pointerEvents: 'none',
-        }} />
-        <div style={{
-          position: 'absolute', bottom: '-8rem', left: '-8rem',
-          width: '38rem', height: '38rem',
-          background: 'radial-gradient(circle, rgba(15,47,87,0.4) 0%, transparent 65%)',
-          pointerEvents: 'none',
-        }} />
+        <div className="absolute -top-40 -right-20 w-[45rem] h-[45rem] bg-radial from-govAccent/10 to-transparent pointer-events-none" />
+        <div className="absolute -bottom-32 -left-32 w-[38rem] h-[38rem] bg-radial from-govDark/40 to-transparent pointer-events-none" />
 
-        {/* Floating particles */}
-        {[...Array(6)].map((_, i) => (
-          <div key={i} style={{
-            position: 'absolute',
-            width: `${4 + i * 2}px`, height: `${4 + i * 2}px`,
-            borderRadius: '50%',
-            background: `rgba(41, 121, 208, ${0.15 + i * 0.04})`,
-            left: `${10 + i * 14}%`,
-            top: `${20 + (i % 3) * 20}%`,
-            animation: `float ${3 + i}s ease-in-out ${i * 0.4}s infinite`,
-            pointerEvents: 'none',
-          }} />
-        ))}
-
-        <div style={{ maxWidth: '60rem', margin: '0 auto', padding: '6rem 1.5rem 4rem', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+        <div className="max-w-[72rem] mx-auto px-6 py-20 lg:py-32 text-center relative z-10">
 
           {/* Government badge */}
-          <div className="hero-text-1" style={{
-            display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-            border: '1px solid rgba(41,121,208,0.35)',
-            borderRadius: '999px',
-            padding: '0.4rem 1rem',
-            marginBottom: '2.25rem',
-            fontSize: '0.72rem', fontWeight: 700,
-            color: '#93c5fd', letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            background: 'rgba(41,121,208,0.08)',
-          }}>
-            <span style={{
-              width: '6px', height: '6px', borderRadius: '50%',
-              background: '#22c55e', display: 'inline-block',
-              boxShadow: '0 0 6px #22c55e',
-            }} />
-            Jal Shakti Ministry · Government of India · Official Portal
+          <div className="hero-text-1 inline-flex items-center gap-2 border border-govAccent/35 rounded-full px-4 py-1.5 mb-8 text-[0.65rem] sm:text-[0.72rem] font-bold text-blue-300 tracking-wider uppercase bg-govAccent/10">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_6px_#22c55e]" />
+            Jal Shakti Ministry · Gov of India · Official Portal
           </div>
 
-          <h1 className="hero-text-2" style={{
-            fontSize: 'clamp(2.4rem, 6vw, 4rem)',
-            fontWeight: 900, lineHeight: 1.1,
-            color: '#f1f5f9', margin: '0 0 1.25rem',
-            letterSpacing: '-0.03em',
-          }}>
+          <h1 className="hero-text-2 text-[2.2rem] sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] text-slate-50 mb-6 tracking-tight">
             Resolve Water Issues<br />
-            <span style={{
-              background: 'linear-gradient(90deg, #60a5fa, #2979d0, #38bdf8)',
-              backgroundSize: '200% auto',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-              animation: 'gradShift 4s ease infinite',
-            }}>
+            <span className="bg-gradient-to-r from-blue-400 via-govAccent to-sky-400 bg-[length:200%_auto] bg-clip-text text-transparent animate-[gradShift_4s_ease_infinite]">
               Faster with AI
             </span>
           </h1>
 
-          <p className="hero-text-3" style={{
-            fontSize: '1.05rem', color: 'rgba(241,245,249,0.6)',
-            maxWidth: '38rem', margin: '0 auto 2.75rem',
-            lineHeight: 1.75,
-          }}>
+          <p className="hero-text-3 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto mb-10 sm:mb-12 leading-relaxed">
             Jal Sahayak AI provides instant answers about water supply,
-            quality, and government schemes — and escalates serious issues
-            directly to your local water authority.
+            quality, and schemes — escalates serious issues
+            directly to your local authority.
           </p>
 
           {error && (
-            <div style={{
-              background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.35)',
-              borderRadius: '0.75rem', padding: '0.75rem 1.25rem',
-              marginBottom: '1.5rem', color: '#fca5a5', fontSize: '0.875rem',
-            }}>
+            <div className="bg-red-500/10 border border-red-500/35 rounded-xl p-3 sm:p-4 mb-6 text-red-300 text-sm max-w-md mx-auto">
               {error}
             </div>
           )}
 
-          <div className="hero-btn" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div className="hero-btn flex flex-col sm:flex-row gap-4 justify-center items-center">
             {/* Google Sign In */}
             <button
               onClick={() => googleLogin()}
               disabled={loading}
-              id="google-signin-btn"
-              style={{
-                display: 'flex', alignItems: 'center', gap: '0.75rem',
-                background: 'white', color: '#0f2f57',
-                padding: '0.875rem 2rem', borderRadius: '0.75rem',
-                fontWeight: 700, fontSize: '0.95rem', border: 'none',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                boxShadow: '0 0 0 0 rgba(255,255,255,0)', opacity: loading ? 0.7 : 1,
-                transition: 'transform 0.2s, box-shadow 0.2s',
-              }}
-              onMouseOver={e => { if (!loading) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(255,255,255,0.15)'; } }}
-              onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+              className="w-full sm:w-auto flex items-center justify-center gap-3 bg-white text-govDark px-8 py-3.5 rounded-xl font-bold text-sm sm:text-base cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-white/10 active:translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               <svg width="20" height="20" viewBox="0 0 48 48">
                 <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.3 29.2 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.3 2.7l5.7-5.7C33.8 7 29.1 5 24 5 12.9 5 4 13.9 4 25s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-4.9z"/>
@@ -225,24 +146,13 @@ const Home = () => {
                 <path fill="#4CAF50" d="M24 45c5 0 9.6-1.9 13-5l-6-5.2C29.3 36.4 26.8 37 24 37c-5.2 0-9.6-2.7-11.3-6.7L6 35.5C9.5 41 16.2 45 24 45z"/>
                 <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.3-2.4 4.3-4.3 5.8l6 5.2c-.4.4 6-4.4 6-13 0-1.3-.1-2.6-.4-4.9z"/>
               </svg>
-              {loading ? 'Signing in…' : 'Continue with Google'}
+              {loading ? 'Signing in...' : 'Continue with Google'}
             </button>
 
             {/* Staff portal */}
             <button
               onClick={() => setShowStaffModal(true)}
-              id="staff-portal-btn"
-              style={{
-                display: 'flex', alignItems: 'center', gap: '0.625rem',
-                background: 'transparent', color: '#e2e8f0',
-                padding: '0.875rem 1.75rem', borderRadius: '0.75rem',
-                fontWeight: 600, fontSize: '0.95rem',
-                border: '1px solid rgba(255,255,255,0.18)',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-              }}
-              onMouseOver={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; }}
-              onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)'; }}
+              className="w-full sm:w-auto flex items-center justify-center gap-2.5 bg-transparent text-slate-200 px-7 py-3.5 rounded-xl font-semibold text-sm border border-white/20 hover:bg-white/5 hover:border-white/30 transition-all cursor-pointer"
             >
               <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               Staff Portal
@@ -250,18 +160,15 @@ const Home = () => {
           </div>
 
           {/* Trust stats bar */}
-          <div className="hero-stat" style={{
-            display: 'flex', gap: '2.5rem', justifyContent: 'center',
-            marginTop: '3.5rem', flexWrap: 'wrap',
-          }}>
+          <div className="hero-stat flex flex-wrap gap-8 sm:gap-12 justify-center mt-14 sm:mt-16">
             {[
               { n: '48h', label: 'Avg Resolution' },
               { n: '95%', label: 'Satisfaction Rate' },
               { n: '1.2L+', label: 'Complaints Resolved' },
             ].map(s => (
-              <div key={s.label} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.6rem', fontWeight: 900, color: '#60a5fa', letterSpacing: '-0.04em' }}>{s.n}</div>
-                <div style={{ fontSize: '0.7rem', color: 'rgba(241,245,249,0.45)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: '0.15rem' }}>{s.label}</div>
+              <div key={s.label} className="text-center group">
+                <div className="text-2xl sm:text-3xl font-black text-blue-400 tracking-tighter transition-transform group-hover:scale-110">{s.n}</div>
+                <div className="text-[0.65rem] sm:text-[0.7rem] text-slate-500 font-bold uppercase tracking-widest mt-1">{s.label}</div>
               </div>
             ))}
           </div>
@@ -269,32 +176,32 @@ const Home = () => {
       </section>
 
       {/* ── FEATURES ──────────────────────────────────────────────────────── */}
-      <section style={{ background: '#0a1428', padding: '5rem 1.5rem' }}>
-        <div style={{ maxWidth: '72rem', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-            <p style={{ fontSize: '0.72rem', fontWeight: 800, color: '#2979d0', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '0.75rem' }}>Capabilities</p>
-            <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 900, color: '#f1f5f9', letterSpacing: '-0.03em', margin: 0 }}>
+      <section className="bg-[#0a1428] py-20 px-6">
+        <div className="max-w-[72rem] mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-[0.72rem] font-extrabold text-govAccent uppercase tracking-[.2em] mb-3">Capabilities</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-50 tracking-tight">
               Everything you need in one place
             </h2>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               {
                 icon: (
                   <svg width="24" height="24" fill="none" stroke="#60a5fa" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
                 ),
                 title: 'AI-Powered Answers',
-                desc: 'Instant, accurate responses about water supply, quality issues, and government schemes — no waiting.',
-                accent: '#1d4ed8',
+                desc: 'Instant, accurate responses about water supply, quality issues, and government schemes.',
+                accent: 'bg-blue-600/20',
               },
               {
                 icon: (
                   <svg width="24" height="24" fill="none" stroke="#34d399" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 ),
                 title: 'Smart Complaint Filing',
-                desc: 'Auto-detected priority (HIGH / MEDIUM / LOW), GPS location capture, and photo evidence attachment.',
-                accent: '#065f46',
+                desc: 'Auto-detected priority, GPS location capture, and photo evidence attachment.',
+                accent: 'bg-emerald-600/20',
               },
               {
                 icon: (
@@ -302,7 +209,7 @@ const Home = () => {
                 ),
                 title: 'Live Staff Chat',
                 desc: 'Real-time messaging with assigned water department officers for escalated complaints.',
-                accent: '#831843',
+                accent: 'bg-pink-600/20',
               },
               {
                 icon: (
@@ -310,33 +217,18 @@ const Home = () => {
                 ),
                 title: 'Real-Time Tracking',
                 desc: 'Track complaint status live — OPEN → IN PROGRESS → RESOLVED with full chat history.',
-                accent: '#7c2d12',
+                accent: 'bg-orange-600/20',
               },
             ].map((f, i) => (
               <div
                 key={i}
-                className="feat-card"
-                style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.07)',
-                  borderRadius: '1rem', padding: '1.75rem',
-                  transition: 'transform 0.25s, border-color 0.25s, box-shadow 0.25s',
-                  cursor: 'default',
-                }}
-                onMouseOver={e => { e.currentTarget.style.borderColor = 'rgba(41,121,208,0.4)'; e.currentTarget.style.boxShadow = '0 8px 40px rgba(41,121,208,0.12)'; }}
-                onMouseOut={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'; e.currentTarget.style.boxShadow = 'none'; }}
+                className="feat-card bg-white/[0.03] border border-white/[0.07] rounded-2xl p-7 transition-all hover:border-govAccent/40 hover:shadow-2xl hover:shadow-govAccent/10 cursor-default"
               >
-                <div style={{
-                  width: '2.75rem', height: '2.75rem',
-                  background: `${f.accent}33`,
-                  borderRadius: '0.75rem',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  marginBottom: '1.25rem',
-                }}>
+                <div className={`w-11 h-11 ${f.accent} rounded-xl flex items-center justify-center mb-5`}>
                   {f.icon}
                 </div>
-                <h3 style={{ margin: '0 0 0.6rem', fontWeight: 700, fontSize: '0.95rem', color: '#f1f5f9' }}>{f.title}</h3>
-                <p style={{ margin: 0, fontSize: '0.825rem', color: 'rgba(241,245,249,0.5)', lineHeight: 1.65 }}>{f.desc}</p>
+                <h3 className="text-base font-bold text-slate-50 mb-2.5">{f.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -344,37 +236,28 @@ const Home = () => {
       </section>
 
       {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
-      <section style={{ background: '#060f1e', padding: '5rem 1.5rem', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-        <div style={{ maxWidth: '46rem', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <p style={{ fontSize: '0.72rem', fontWeight: 800, color: '#2979d0', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '0.75rem' }}>Process</p>
-            <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.4rem)', fontWeight: 900, color: '#f1f5f9', letterSpacing: '-0.03em', margin: 0 }}>
+      <section className="bg-[#060f1e] py-20 px-6 border-t border-white/5">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-[0.72rem] font-extrabold text-govAccent uppercase tracking-[.2em] mb-3">Process</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-50 tracking-tight">
               Complaint to Resolution in 4 steps
             </h2>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+          <div className="space-y-0">
             {[
               { n: '01', t: 'Sign in with Google', d: 'Secure one-click login — no registration needed, no passwords to remember.' },
               { n: '02', t: 'Describe your issue', d: 'Chat with Jal Sahayak AI. It answers water-related queries from a verified knowledge base.' },
-              { n: '03', t: 'Register a complaint', d: 'If unresolved, the system auto-creates a complaint with priority, category, and your GPS location.' },
+              { n: '03', t: 'Register a complaint', d: 'If unresolved, the system auto-creates a complaint with priority and your GPS location.' },
               { n: '04', t: 'Get resolved', d: 'A water department officer joins your complaint chat and resolves it in real time.' },
             ].map((step, i) => (
-              <div key={i} className="step-item" style={{
-                display: 'flex', gap: '1.5rem', alignItems: 'flex-start',
-                animationDelay: `${i * 0.12}s`,
-                padding: '1.75rem 0',
-                borderBottom: i < 3 ? '1px solid rgba(255,255,255,0.05)' : 'none',
-              }}>
-                <div style={{
-                  minWidth: '3rem', textAlign: 'right',
-                  fontSize: '0.7rem', fontWeight: 800, color: 'rgba(41,121,208,0.5)',
-                  letterSpacing: '0.05em', paddingTop: '0.15rem',
-                }}>{step.n}</div>
-                <div style={{ width: '1px', background: 'rgba(41,121,208,0.25)', alignSelf: 'stretch', margin: '0 0.25rem' }} />
+              <div key={i} className="step-item flex gap-6 sm:gap-8 items-start py-8 border-b border-white/5 last:border-0" style={{ animationDelay: `${i * 0.12}s` }}>
+                <div className="min-w-[2.5rem] sm:min-w-[3rem] text-right text-[0.65rem] sm:text-[0.75rem] font-black text-govAccent/50 tracking-wider pt-1">{step.n}</div>
+                <div className="w-px bg-govAccent/20 self-stretch" />
                 <div>
-                  <div style={{ fontWeight: 700, color: '#e2e8f0', fontSize: '0.95rem', marginBottom: '0.35rem' }}>{step.t}</div>
-                  <div style={{ fontSize: '0.825rem', color: 'rgba(241,245,249,0.45)', lineHeight: 1.65 }}>{step.d}</div>
+                  <div className="font-bold text-slate-200 text-sm sm:text-base mb-1.5">{step.t}</div>
+                  <div className="text-xs sm:text-sm text-slate-500 leading-safe">{step.d}</div>
                 </div>
               </div>
             ))}
@@ -383,104 +266,54 @@ const Home = () => {
       </section>
 
       {/* ── FOOTER ────────────────────────────────────────────────────────── */}
-      <footer style={{
-        borderTop: '1px solid rgba(255,255,255,0.06)',
-        padding: '2rem 1.5rem',
-        background: '#060f1e',
-        textAlign: 'center',
-        color: 'rgba(241,245,249,0.3)',
-        fontSize: '0.78rem',
-      }}>
+      <footer className="border-t border-white/10 py-8 px-6 bg-[#060f1e] text-center text-slate-500 text-xs sm:text-sm">
         © 2026 Jal Shakti Water Services — Government of India &nbsp;|&nbsp; Jal Sahayak AI
       </footer>
 
       {/* ── STAFF LOGIN MODAL ─────────────────────────────────────────────── */}
       {showStaffModal && (
-        <div style={{
-          position: 'fixed', inset: 0,
-          background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(6px)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          zIndex: 1000, padding: '1rem',
-        }} onClick={(e) => e.target === e.currentTarget && setShowStaffModal(false)}>
-          <div style={{
-            background: '#0d1f3c',
-            border: '1px solid rgba(41,121,208,0.25)',
-            borderRadius: '1.25rem', padding: '2.25rem',
-            maxWidth: '26rem', width: '100%',
-            boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
-            animation: 'heroFadeUp 0.3s ease both',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem', marginBottom: '1.75rem' }}>
-              <div style={{
-                background: 'rgba(41,121,208,0.12)',
-                border: '1px solid rgba(41,121,208,0.25)',
-                padding: '0.625rem', borderRadius: '0.75rem',
-              }}>
-                <svg width="20" height="20" fill="none" stroke="#60a5fa" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[1000] p-4 animate-fadeIn" 
+             onClick={(e) => e.target === e.currentTarget && setShowStaffModal(false)}>
+          <div className="bg-[#0d1f3c] border border-govAccent/25 rounded-2xl p-6 sm:p-10 max-w-md w-full shadow-2xl animate-heroFadeUp">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="bg-govAccent/10 border border-govAccent/20 p-2.5 rounded-xl">
+                <svg width="24" height="24" fill="none" stroke="#60a5fa" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               </div>
               <div>
-                <h2 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800, color: '#f1f5f9' }}>Staff Portal</h2>
-                <p style={{ margin: 0, fontSize: '0.75rem', color: 'rgba(241,245,249,0.45)' }}>Water Department Login</p>
+                <h2 className="text-xl sm:text-2xl font-black text-slate-50 mb-0.5">Staff Portal</h2>
+                <p className="text-xs sm:text-sm text-slate-500">Water Department Login</p>
               </div>
             </div>
 
             {error && (
-              <div style={{
-                background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)',
-                borderRadius: '0.5rem', padding: '0.625rem 1rem',
-                marginBottom: '1rem', color: '#fca5a5', fontSize: '0.85rem',
-              }}>{error}</div>
+              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3.5 mb-6 text-red-300 text-xs sm:text-sm">
+                {error}
+              </div>
             )}
 
-            <form onSubmit={handleStaffLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <form onSubmit={handleStaffLogin} className="space-y-5">
               {[
                 { label: 'Staff Email', type: 'email', val: staffEmail, set: setStaffEmail, ph: 'officer@jalshakti.gov.in' },
                 { label: 'Password', type: 'password', val: staffPass, set: setStaffPass, ph: '••••••••' },
               ].map(f => (
                 <div key={f.label}>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'rgba(241,245,249,0.6)', marginBottom: '0.4rem' }}>{f.label}</label>
+                  <label className="block text-[0.7rem] sm:text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">{f.label}</label>
                   <input
                     type={f.type} required value={f.val} onChange={e => f.set(e.target.value)}
                     placeholder={f.ph}
-                    style={{
-                      width: '100%', padding: '0.7rem 0.875rem',
-                      background: 'rgba(255,255,255,0.04)',
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      borderRadius: '0.5rem',
-                      fontSize: '0.9rem', outline: 'none',
-                      color: '#f1f5f9', boxSizing: 'border-box',
-                      transition: 'border-color 0.2s',
-                    }}
-                    onFocus={e => e.target.style.borderColor = 'rgba(41,121,208,0.6)'}
-                    onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
+                    className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-3 text-sm text-slate-100 outline-none focus:border-govAccent/60 transition-colors placeholder:text-slate-600"
                   />
                 </div>
               ))}
 
-              <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
-                <button type="button" onClick={() => setShowStaffModal(false)} style={{
-                  flex: 1, padding: '0.75rem',
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  borderRadius: '0.625rem', background: 'transparent',
-                  cursor: 'pointer', fontWeight: 600, color: 'rgba(241,245,249,0.6)',
-                  fontSize: '0.875rem', transition: 'background 0.2s',
-                }}
-                  onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-                  onMouseOut={e => e.currentTarget.style.background = 'transparent'}
-                >Cancel</button>
-                <button type="submit" disabled={loading} style={{
-                  flex: 1, padding: '0.75rem',
-                  background: '#2979d0', color: 'white',
-                  border: 'none', borderRadius: '0.625rem',
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  fontWeight: 700, fontSize: '0.875rem',
-                  opacity: loading ? 0.7 : 1,
-                  transition: 'background 0.2s',
-                }}
-                  onMouseOver={e => { if (!loading) e.currentTarget.style.background = '#1d4ed8'; }}
-                  onMouseOut={e => e.currentTarget.style.background = '#2979d0'}
-                >
-                  {loading ? 'Logging in…' : 'Login'}
+              <div className="flex gap-4 pt-3">
+                <button type="button" onClick={() => setShowStaffModal(false)} 
+                  className="flex-1 bg-transparent border border-white/15 py-3 rounded-xl text-slate-400 font-bold text-sm hover:bg-white/5 transition-colors">
+                  Cancel
+                </button>
+                <button type="submit" disabled={loading}
+                  className="flex-1 bg-govAccent py-3 rounded-xl text-white font-bold text-sm hover:bg-blue-600 transition-colors disabled:opacity-70">
+                  {loading ? '...' : 'Login'}
                 </button>
               </div>
             </form>

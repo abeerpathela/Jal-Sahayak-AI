@@ -139,18 +139,18 @@ const Chatbot = () => {
   };
 
   return (
-    <div style={{ minHeight:'100vh', background:'#060f1e', display:'flex', flexDirection:'column', fontFamily:"'Inter',system-ui,sans-serif" }}>
+    <div className="min-h-screen bg-[#060f1e] flex flex-col font-sans">
       <Navbar />
-      <div style={{ maxWidth:'56rem', margin:'0 auto', width:'100%', padding:'2rem 1.25rem', display:'flex', flexDirection:'column', gap:'1rem' }}>
+      <div className="max-w-[56rem] mx-auto w-full px-5 py-8 sm:py-10 flex flex-col gap-4">
         {/* Header card */}
-        <div style={{ background:'rgba(255,255,255,0.04)', borderRadius:'0.875rem', padding:'1.25rem 1.5rem', border:'1px solid rgba(255,255,255,0.08)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div className="bg-white/[0.04] rounded-2xl p-5 sm:p-6 border border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 style={{ margin:0, fontSize:'1.1rem', fontWeight:800, color:'#f1f5f9', letterSpacing:'-0.02em' }}>Jal Sahayak AI Assistant</h1>
-            <p style={{ margin:'0.2rem 0 0', fontSize:'0.8rem', color:'rgba(241,245,249,0.4)' }}>Ask me anything about Jal Shakti water services</p>
+            <h1 className="text-lg sm:text-xl font-black text-slate-50 tracking-tight">Jal Sahayak AI Assistant</h1>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">Ask me anything about Jal Shakti water services</p>
           </div>
-          <div style={{ display:'flex', alignItems:'center', gap:'0.5rem', background:'rgba(34,197,94,0.1)', padding:'0.4rem 0.875rem', borderRadius:'999px', border:'1px solid rgba(34,197,94,0.25)' }}>
-            <div style={{ width:'8px', height:'8px', background:'#22c55e', borderRadius:'50%', boxShadow:'0 0 6px #22c55e' }} />
-            <span style={{ fontSize:'0.75rem', fontWeight:700, color:'#4ade80' }}>AI Online</span>
+          <div className="flex items-center gap-2 bg-emerald-500/10 px-4 py-1.5 rounded-full border border-emerald-500/20 self-start sm:self-auto">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full shadow-[0_0_8px_#10b981]" />
+            <span className="text-[0.7rem] font-black text-emerald-400 uppercase tracking-widest">AI Online</span>
           </div>
         </div>
 
@@ -158,57 +158,48 @@ const Chatbot = () => {
 
         {/* Escalation banner */}
         {!created && (
-          <div style={{
-            background: showEscalate ? 'rgba(245,158,11,0.08)' : 'rgba(255,255,255,0.04)',
-            border: `1px solid ${showEscalate ? 'rgba(245,158,11,0.3)' : 'rgba(255,255,255,0.08)'}`,
-            borderRadius:'0.875rem', padding:'1rem 1.25rem',
-            display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:'0.75rem',
-            transition:'all 0.3s',
-          }}>
-            <div style={{ display:'flex', alignItems:'flex-start', gap:'0.75rem', flex:1 }}>
-              <AlertTriangle size={20} color="#fbbf24" style={{ flexShrink:0, marginTop:'0.1rem' }} />
-              <p style={{ margin:0, fontSize:'0.85rem', color:'rgba(241,245,249,0.65)', lineHeight:1.5 }}>
+          <div className={`rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 transition-all ${
+            showEscalate ? 'bg-amber-500/10 border border-amber-500/20' : 'bg-white/[0.03] border border-white/5'
+          }`}>
+            <div className="flex items-start gap-4">
+              <AlertTriangle size={24} className="text-amber-500 flex-shrink-0 mt-0.5" />
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
                 {showEscalate
                   ? "It looks like you need further assistance. Register a formal complaint to speak with a department officer."
                   : "If AI couldn't resolve your issue, you can directly contact a water department officer."}
               </p>
             </div>
-            <button onClick={() => setShowForm(true)} style={{
-              display:'flex', alignItems:'center', gap:'0.5rem',
-              background:'#2979d0', color:'white', border:'none',
-              padding:'0.625rem 1.25rem', borderRadius:'0.625rem',
-              fontWeight:700, fontSize:'0.85rem', cursor:'pointer', whiteSpace:'nowrap',
-              boxShadow:'0 4px 16px rgba(41,121,208,0.35)',
-            }}>
-              <PhoneCall size={15} /> Contact Support
+            <button 
+              onClick={() => setShowForm(true)} 
+              className="w-full sm:w-auto flex items-center justify-center gap-2 bg-govAccent hover:bg-govDark text-white border-none py-3.5 px-6 rounded-xl font-bold text-sm cursor-pointer shadow-lg shadow-govAccent/20 transition-all hover:-translate-y-0.5"
+            >
+              <PhoneCall size={16} /> Contact Support
             </button>
           </div>
         )}
 
         {/* Success card */}
         {created && (
-          <div style={{
-            background:'rgba(34,197,94,0.08)', border:'1px solid rgba(34,197,94,0.25)', borderRadius:'0.875rem',
-            padding:'1rem 1.25rem', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:'0.75rem',
-          }}>
-            <div style={{ display:'flex', alignItems:'center', gap:'0.75rem' }}>
-              <CheckCircle size={22} color="#4ade80" />
+          <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
+            <div className="flex items-center gap-4">
+              <CheckCircle size={28} className="text-emerald-500" />
               <div>
-                <p style={{ margin:0, fontWeight:700, color:'#4ade80', fontSize:'0.9rem' }}>
+                <p className="font-black text-emerald-400 text-sm sm:text-base tracking-tight">
                   Complaint #{created.complaintNumber} Registered
                 </p>
-                <p style={{ margin:0, fontSize:'0.78rem', color:'rgba(74,222,128,0.7)' }}>Priority: <strong>{created.priority}</strong></p>
+                <p className="text-xs text-emerald-500/70 mt-0.5">Priority: <strong className="uppercase">{created.priority}</strong></p>
               </div>
             </div>
-            <button onClick={() => navigate('/customer-dashboard')} style={{
-              background:'#22c55e', color:'white', border:'none',
-              padding:'0.5rem 1rem', borderRadius:'0.5rem', fontWeight:700, fontSize:'0.8rem', cursor:'pointer',
-            }}>
+            <button 
+              onClick={() => navigate('/customer-dashboard')} 
+              className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white border-none py-3 px-6 rounded-xl font-bold text-sm cursor-pointer transition-colors"
+            >
               My Dashboard →
             </button>
           </div>
         )}
       </div>
+
 
       {/* Complaint Form Modal */}
       {showForm && (

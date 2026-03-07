@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Menu, X, LayoutDashboard, LogOut, User } from 'lucide-react';
+
 const Navbar = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -16,116 +21,133 @@ const Navbar = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     navigate('/');
+    setMobileMenuOpen(false);
   };
 
   return (
-    <nav style={{
-      position: 'sticky', top: 0, zIndex: 200,
-      backdropFilter: 'blur(16px)',
-      background: scrolled
-        ? 'rgba(10, 25, 50, 0.96)'
-        : 'rgba(10, 25, 50, 0.92)',
-      borderBottom: scrolled ? '1px solid rgba(41, 121, 208, 0.25)' : '1px solid rgba(255,255,255,0.06)',
-      transition: 'all 0.3s ease',
-    }}>
-      <div style={{
-        maxWidth: '82rem', margin: '0 auto',
-        padding: '0 1.5rem',
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        height: '4rem',
-      }}>
-
+    <nav className={`sticky top-0 z-[200] transition-all duration-300 ${
+      scrolled ? 'bg-[#0a1932]/96 backdrop-blur-md border-b border-govAccent/25' : 'bg-[#0a1932]/92 backdrop-blur-sm border-b border-white/5'
+    }`}>
+      <div className="max-w-[82rem] mx-auto px-6 h-16 flex justify-between items-center">
+        
         {/* Brand / Logo */}
-        <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          {/* Badge Logo */}
+        <Link to="/" className="flex items-center gap-3 no-underline" onClick={() => setMobileMenuOpen(false)}>
           <img 
             src="/logo.jpg" 
             alt="Jal Sahayak Logo" 
-            style={{ 
-              width: '42px', 
-              height: '42px', 
-              borderRadius: '50%', 
-              objectFit: 'cover',
-              border: '1px solid rgba(255,255,255,0.1)'
-            }} 
+            className="w-[42px] h-[42px] rounded-full object-cover border border-white/10"
           />
-
-          <div>
-            <div style={{ fontWeight: 800, fontSize: '1rem', color: 'white', letterSpacing: '-0.3px', lineHeight: 1.1 }}>
+          <div className="hidden sm:block">
+            <div className="font-extrabold text-base text-white tracking-tight leading-none">
               Jal Sahayak
             </div>
-            <div style={{ fontSize: '0.6rem', color: 'rgba(41,121,208,0.9)', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+            <div className="text-[0.6rem] color-govAccent/90 font-semibold tracking-widest uppercase mt-0.5">
               AI · Water Services
             </div>
           </div>
+          {/* Mobile minimal title */}
+          <div className="sm:hidden font-extrabold text-base text-white tracking-tight">
+            Jal Sahayak
+          </div>
         </Link>
 
-        {/* Right */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-3">
           {user ? (
             <>
               <Link
                 to={user.role === 'respondent' ? '/respondent-dashboard' : '/customer-dashboard'}
-                style={{
-                  color: 'rgba(255,255,255,0.75)', textDecoration: 'none',
-                  fontSize: '0.85rem', fontWeight: 500,
-                  padding: '0.375rem 0.875rem',
-                  borderRadius: '0.5rem',
-                  transition: 'color 0.2s, background 0.2s',
-                }}
-                onMouseOver={e => { e.currentTarget.style.color = 'white'; e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; }}
-                onMouseOut={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.75)'; e.currentTarget.style.background = 'transparent'; }}
+                className="text-white/75 no-underline text-sm font-medium px-3.5 py-1.5 rounded-lg transition-all hover:text-white hover:bg-white/10 flex items-center gap-2"
               >
+                <LayoutDashboard size={14} />
                 Dashboard
               </Link>
 
-              <span style={{
-                background: user.role === 'respondent' ? 'rgba(234,179,8,0.15)' : 'rgba(34,197,94,0.15)',
-                color: user.role === 'respondent' ? '#fcd34d' : '#4ade80',
-                border: `1px solid ${user.role === 'respondent' ? 'rgba(234,179,8,0.3)' : 'rgba(34,197,94,0.3)'}`,
-                fontSize: '0.65rem', fontWeight: 700,
-                padding: '0.2rem 0.6rem', borderRadius: '999px',
-                textTransform: 'uppercase', letterSpacing: '0.08em',
-              }}>
+              <span className={`text-[0.65rem] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider border ${
+                user.role === 'respondent' 
+                  ? 'bg-yellow-500/15 text-yellow-300 border-yellow-500/30' 
+                  : 'bg-green-500/15 text-green-400 border-green-500/30'
+              }`}>
                 {user.role === 'respondent' ? 'Staff' : 'Citizen'}
               </span>
 
-              <div style={{ width: '1px', height: '1.5rem', background: 'rgba(255,255,255,0.15)' }} />
+              <div className="w-[1px] h-6 bg-white/15 mx-1" />
 
-              <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', fontWeight: 500 }}>
+              <span className="text-sm text-white/60 font-medium flex items-center gap-2">
+                <User size={14} />
                 {user.name?.split(' ')[0]}
               </span>
 
               <button
                 onClick={logout}
-                style={{
-                  background: 'transparent',
-                  color: '#fc8181',
-                  border: '1px solid rgba(252,129,129,0.4)',
-                  padding: '0.35rem 0.875rem',
-                  borderRadius: '0.5rem',
-                  fontSize: '0.8rem', fontWeight: 600,
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                }}
-                onMouseOver={e => { e.currentTarget.style.background = 'rgba(220,38,38,0.15)'; e.currentTarget.style.borderColor = '#fc8181'; }}
-                onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(252,129,129,0.4)'; }}
+                className="bg-transparent text-red-400 border border-red-400/40 px-3.5 py-1.5 rounded-lg text-sm font-semibold cursor-pointer transition-all hover:bg-red-600/15 hover:border-red-400 flex items-center gap-2"
               >
+                <LogOut size={14} />
                 Logout
               </button>
             </>
           ) : (
-            <Link to="/" style={{
-              background: '#2979d0',
-              color: 'white',
-              padding: '0.45rem 1.25rem',
-              borderRadius: '0.5rem',
-              fontWeight: 600, fontSize: '0.875rem',
-              textDecoration: 'none',
-              transition: 'background 0.2s',
-            }}
-              onMouseOver={e => e.currentTarget.style.background = '#1b4d89'}
-              onMouseOut={e => e.currentTarget.style.background = '#2979d0'}
+            <Link to="/" className="bg-[#2979d0] hover:bg-[#1b4d89] text-white px-5 py-2 rounded-lg font-semibold text-sm no-underline transition-colors shrink-0">
+              Sign In
+            </Link>
+          )}
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button 
+          className="md:hidden text-white/80 p-2 rounded-lg hover:bg-white/10 transition-colors"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Drawer */}
+      <div className={`md:hidden fixed inset-x-0 top-16 bg-[#0a1932]/98 backdrop-blur-xl border-b border-white/10 overflow-hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className="p-6 flex flex-col gap-4">
+          {user ? (
+            <>
+              <div className="flex items-center justify-between pb-4 border-b border-white/5">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-govAccent/20 flex items-center justify-center text-govAccent border border-govAccent/30">
+                    <User size={20} />
+                  </div>
+                  <div>
+                    <div className="text-white font-semibold text-sm">{user.name}</div>
+                    <div className="text-white/40 text-xs capitalize">{user.role}</div>
+                  </div>
+                </div>
+                <span className={`text-[0.6rem] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider border ${
+                  user.role === 'respondent' 
+                    ? 'bg-yellow-500/15 text-yellow-300 border-yellow-500/30' 
+                    : 'bg-green-500/15 text-green-400 border-green-500/30'
+                }`}>
+                  {user.role === 'respondent' ? 'Staff' : 'Citizen'}
+                </span>
+              </div>
+              
+              <Link
+                to={user.role === 'respondent' ? '/respondent-dashboard' : '/customer-dashboard'}
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-white/80 no-underline text-base font-medium p-3 rounded-xl bg-white/5 hover:bg-white/10 flex items-center gap-3 transition-colors"
+              >
+                <LayoutDashboard size={20} />
+                Dashboard
+              </Link>
+
+              <button
+                onClick={logout}
+                className="w-full bg-red-600/10 text-red-400 border border-red-500/20 p-3 rounded-xl text-base font-semibold cursor-pointer flex items-center gap-3"
+              >
+                <LogOut size={20} />
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link 
+              to="/" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full bg-[#2979d0] hover:bg-[#1b4d89] text-white p-3 rounded-xl font-bold text-center no-underline transition-colors shadow-lg shadow-blue-900/20"
             >
               Sign In
             </Link>

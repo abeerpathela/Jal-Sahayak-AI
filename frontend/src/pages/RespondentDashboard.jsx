@@ -62,94 +62,82 @@ const RespondentDashboard = () => {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', background: '#060f1e', display: 'flex', flexDirection: 'column', fontFamily: "'Inter',system-ui,sans-serif" }}>
+    <div className="min-h-screen bg-[#060f1e] flex flex-col font-sans">
       <Navbar />
 
-      <div style={{ maxWidth: '80rem', margin: '0 auto', width: '100%', padding: '2rem 1.25rem' }}>
+      <div className="max-w-[80rem] mx-auto w-full px-5 py-8 sm:py-10">
         {/* Header */}
-        <div style={{ marginBottom: '2rem' }}>
-          <h1 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 800, color: '#f1f5f9', letterSpacing: '-0.03em' }}>Respondent Dashboard</h1>
-          <p style={{ margin: '0.3rem 0 0', color: 'rgba(241,245,249,0.45)', fontSize: '0.85rem' }}>
-            Water Dept. Staff Portal — <strong style={{ color: 'rgba(241,245,249,0.7)' }}>{user?.email}</strong>
+        <div className="mb-8">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-50 tracking-tight">Respondent Dashboard</h1>
+          <p className="text-sm text-slate-500 mt-1.5">
+            Water Dept. Staff Portal — <strong className="text-slate-300">{user?.email}</strong>
           </p>
         </div>
 
         {/* Stats Grid */}
-        <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '1rem', marginBottom: '2rem',
-        }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {stats.map(stat => (
             <div
               key={stat.label}
               onClick={() => setActiveTab(stat.key)}
-              style={{
-                background: stat.bg,
-                border: `1px solid ${activeTab === stat.key ? stat.color : stat.border}`,
-                borderRadius: '1rem', padding: '1.25rem',
-                cursor: 'pointer', transition: 'all 0.18s',
-                display: 'flex', alignItems: 'center', gap: '1rem',
-                boxShadow: activeTab === stat.key ? `0 4px 20px ${stat.bg}` : 'none',
-                transform: activeTab === stat.key ? 'translateY(-2px)' : 'translateY(0)',
-              }}
+              className={`p-5 rounded-2xl border cursor-pointer transition-all flex items-center gap-4 ${
+                activeTab === stat.key 
+                  ? 'bg-white/10 border-blue-400 translate-y-[-2px] shadow-lg shadow-blue-500/10' 
+                  : 'bg-white/[0.03] border-white/10 hover:border-white/20'
+              }`}
             >
-              <div style={{
-                width: '3.5rem', height: '3.5rem',
-                background: `${stat.color}22`,
-                border: `1px solid ${stat.border}`,
-                color: stat.color, borderRadius: '0.75rem',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center border ${
+                activeTab === stat.key ? 'bg-blue-500/20 border-blue-500/30 text-blue-400' : 'bg-white/5 border-white/10 text-slate-400'
+              }`}>
                 {stat.icon}
               </div>
               <div>
-                <div style={{ fontSize: '1.5rem', fontWeight: 800, color: stat.color, lineHeight: 1 }}>{stat.count}</div>
-                <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'rgba(241,245,249,0.4)', textTransform: 'uppercase', marginTop: '0.2rem', letterSpacing: '0.04em' }}>{stat.label}</div>
+                <div className={`text-2xl font-black leading-none ${activeTab === stat.key ? 'text-blue-400' : 'text-slate-200'}`}>{stat.count}</div>
+                <div className="text-[0.65rem] font-bold text-slate-500 uppercase mt-1 tracking-wider">{stat.label}</div>
               </div>
             </div>
           ))}
         </div>
 
         {/* Search Bar */}
-        <form onSubmit={handleSearch} style={{ display: 'flex', gap: '0.75rem', marginBottom: '2rem' }}>
-          <div style={{ position: 'relative', flex: 1 }}>
-            <Search size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3 mb-8">
+          <div className="relative flex-1">
+            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
             <input
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Search by Complaint ID (e.g. JSA-XXXXX)"
-              style={{
-                width: '100%', padding: '0.875rem 1rem 0.875rem 3rem',
-                borderRadius: '0.875rem', border: '1.5px solid #e5e7eb',
-                fontSize: '0.9rem', outline: 'none', background: 'white',
-                boxSizing: 'border-box',
-              }}
+              placeholder="Complaint ID (e.g. JSA-XXXXX)"
+              className="w-full pl-11 pr-4 py-3.5 bg-white rounded-xl border border-slate-200 text-sm outline-none focus:border-govAccent transition-colors"
             />
           </div>
-          <button type="submit" disabled={searching} style={{
-            background: '#1b4d89', color: 'white', border: 'none',
-            padding: '0 1.5rem', borderRadius: '0.875rem', fontWeight: 700,
-            fontSize: '0.9rem', cursor: 'pointer', opacity: searching ? 0.7 : 1,
-            whiteSpace: 'nowrap',
-          }}>
-            {searching ? '...' : 'Search'}
-          </button>
-          {searchResult && (
-            <button onClick={() => setSearchResult(null)} style={{ background: 'white', border: '1.5px solid #e5e7eb', padding: '0 1rem', borderRadius: '0.875rem', fontWeight: 600, color: '#6b7280', cursor: 'pointer' }}>
-              Clear
+          <div className="flex gap-2">
+            <button 
+              type="submit" 
+              disabled={searching}
+              className="flex-1 sm:flex-none bg-govDark text-white border-none px-8 py-3.5 rounded-xl font-bold text-sm cursor-pointer shadow-lg shadow-govDark/20 transition-all hover:bg-govBlue active:translate-y-0 disabled:opacity-70"
+            >
+              {searching ? '...' : 'Search'}
             </button>
-          )}
+            {searchResult && (
+              <button 
+                onClick={() => setSearchResult(null)} 
+                className="bg-white border border-slate-200 px-6 py-3.5 rounded-xl font-bold text-slate-500 text-sm cursor-pointer hover:bg-slate-50 transition-colors"
+              >
+                Clear
+              </button>
+            )}
+          </div>
         </form>
 
         {/* Search Result Display */}
         {searchResult && (
-          <div style={{ marginBottom: '2.5rem', padding: '1.5rem', background: '#fffbeb', borderRadius: '1.25rem', border: '1px solid #fde68a' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-              <Filter size={16} color="#b45309" />
-              <p style={{ margin: 0, fontSize: '0.85rem', fontWeight: 700, color: '#b45309' }}>SEARCH RESULT</p>
+          <div className="mb-10 p-5 sm:p-6 bg-amber-50 rounded-2xl border border-amber-200">
+            <div className="flex items-center gap-2 mb-4">
+              <Filter size={16} className="text-amber-700" />
+              <p className="text-[0.65rem] font-black text-amber-800 uppercase tracking-widest">SEARCH RESULT</p>
             </div>
-            <div style={{ maxWidth: '24rem' }}>
+            <div className="max-w-md">
               <ComplaintCard complaint={searchResult} isRespondent />
             </div>
           </div>
@@ -158,40 +146,35 @@ const RespondentDashboard = () => {
         {/* Tab List */}
         {!searchResult && (
           <>
-            <div style={{ display: 'flex', gap: '1.5rem', borderBottom: '2px solid #e5e7eb', marginBottom: '1.5rem', overflowX: 'auto' }}>
+            <div className="flex gap-6 border-b border-white/10 mb-6 overflow-x-auto no-scrollbar">
               {['all', 'active', 'high', 'resolved'].map(t => (
                 <button
                   key={t}
                   onClick={() => setActiveTab(t)}
-                  style={{
-                    padding: '0.75rem 0.25rem', fontSize: '0.875rem', fontWeight: 700,
-                    border: 'none', background: 'transparent', cursor: 'pointer',
-                    color: activeTab === t ? '#1b4d89' : '#9ca3af',
-                    borderBottom: activeTab === t ? '3px solid #1b4d89' : '3px solid transparent',
-                    textTransform: 'uppercase', letterSpacing: '0.05em',
-                    transition: 'all 0.1s', whiteSpace: 'nowrap',
-                  }}
+                  className={`py-3 px-1 text-[0.7rem] font-black uppercase tracking-[.15em] border-none bg-transparent cursor-pointer transition-all whitespace-nowrap relative ${
+                    activeTab === t ? 'text-blue-400' : 'text-slate-500'
+                  }`}
                 >
-                  {t === 'high' ? '🔴 High Priority' : t === 'active' ? 'Active' : t === 'resolved' ? 'Resolved' : 'All Complaints'}
+                  {t === 'high' ? '🔴 High Priority' : t === 'active' ? 'Active' : t === 'resolved' ? 'Resolved' : 'All'}
+                  {activeTab === t && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-govAccent" />
+                  )}
                 </button>
               ))}
             </div>
 
             {loading ? (
-              <div style={{ display: 'flex', justifyContent: 'center', padding: '5rem 0' }}>
+              <div className="flex justify-center py-20">
                 <div className="spinner" />
               </div>
             ) : filtered.length === 0 ? (
-              <div style={{
-                textAlign: 'center', padding: '6rem 2rem', background: 'white',
-                borderRadius: '1.25rem', border: '2px dashed #e5e7eb',
-              }}>
-                <Inbox size={48} color="#cbd5e1" style={{ marginBottom: '1rem' }} />
-                <h3 style={{ margin: 0, color: '#64748b' }}>No complaints in this category</h3>
-                <p style={{ color: '#94a3b8', fontSize: '0.8rem', marginTop: '0.5rem' }}>Great job! Nothing needs your immediate attention here.</p>
+              <div className="text-center py-20 px-6 bg-white/[0.02] rounded-2xl border border-dashed border-white/10">
+                <Inbox size={48} className="text-slate-700 mb-4 mx-auto" />
+                <h3 className="text-slate-500 font-bold">No complaints found</h3>
+                <p className="text-slate-600 text-sm mt-2">Everything looks clear here!</p>
               </div>
             ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem' }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                 {filtered.map(c => (
                   <ComplaintCard key={c._id} complaint={c} isRespondent />
                 ))}
@@ -201,6 +184,7 @@ const RespondentDashboard = () => {
         )}
       </div>
     </div>
+
   );
 };
 

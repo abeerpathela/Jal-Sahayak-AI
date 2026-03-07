@@ -100,34 +100,25 @@ const ComplaintChat = () => {
   );
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f3f4f6' }}>
+    <div className="min-h-screen flex flex-col bg-slate-50 font-sans">
       <Navbar />
 
-      <div style={{ maxWidth: '64rem', margin: '0 auto', width: '100%', flex: 1, padding: '1.5rem 1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <div className="max-w-[64rem] mx-auto w-full flex-1 px-5 py-8 sm:py-10 flex flex-col gap-6">
         
         {/* Sub Header / Breadcrumb */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <button 
             onClick={() => navigate(user.role === 'respondent' ? '/respondent-dashboard' : '/customer-dashboard')}
-            style={{ 
-              display: 'flex', alignItems: 'center', gap: '0.4rem', border: 'none', background: 'none',
-              color: '#1b4d89', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem'
-            }}
+            className="flex items-center gap-2 bg-transparent border-none text-govDark font-black text-[0.75rem] uppercase tracking-widest cursor-pointer group"
           >
-            <ChevronLeft size={18} />
+            <ChevronLeft size={18} className="transition-transform group-hover:-translate-x-1" />
             Back to Dashboard
           </button>
           
           {user.role === 'respondent' && complaint.status !== 'RESOLVED' && (
             <button 
               onClick={resolve}
-              style={{
-                display: 'flex', alignItems: 'center', gap: '0.5rem',
-                background: '#16a34a', color: 'white', border: 'none',
-                padding: '0.6rem 1rem', borderRadius: '0.625rem', 
-                fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer',
-                boxShadow: '0 4px 12px rgba(22,163,74,0.25)',
-              }}
+              className="w-full sm:w-auto flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white border-none py-3 px-6 rounded-xl font-bold text-sm cursor-pointer shadow-lg shadow-emerald-500/20 transition-all"
             >
               <CheckCircle2 size={16} /> Mark Resolved
             </button>
@@ -135,46 +126,42 @@ const ComplaintChat = () => {
         </div>
 
         {/* Info Bar */}
-        <div style={{
-          background: 'white', borderRadius: '1rem', padding: '1.25rem 1.5rem',
-          border: '1px solid #e5e7eb', boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ background: '#eff6ff', padding: '0.75rem', borderRadius: '0.875rem' }}>
-              <Shield size={24} color="#1b4d89" />
+        <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+          <div className="flex items-center gap-5">
+            <div className="bg-blue-50 p-3.5 rounded-2xl border border-blue-100 hidden sm:block">
+              <Shield size={28} className="text-govDark" />
             </div>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                <h1 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#0f2f57' }}>
+              <div className="flex items-center gap-3 mb-1">
+                <h1 className="text-xl sm:text-2xl font-black text-govDark tracking-tight">
                   {complaint.complaintNumber}
                 </h1>
-                <span style={{ 
-                  background: complaint.priority === 'HIGH' ? '#fef2f2' : '#fffbeb',
-                  color: complaint.priority === 'HIGH' ? '#b91c1c' : '#b45309',
-                  fontSize: '0.65rem', fontWeight: 800, padding: '0.2rem 0.5rem', borderRadius: '999px',
-                  border: `1px solid ${complaint.priority === 'HIGH' ? '#fca5a5' : '#fcd34d'}`
-                }}>
+                <span className={`text-[0.65rem] font-black px-2 py-0.5 rounded-full uppercase tracking-widest border ${
+                  complaint.priority === 'HIGH' 
+                    ? 'bg-red-50 text-red-700 border-red-100' 
+                    : 'bg-amber-50 text-amber-700 border-amber-100'
+                }`}>
                   {complaint.priority}
                 </span>
               </div>
-              <p style={{ margin: '0.1rem 0 0', fontSize: '0.825rem', color: '#6b7280' }}>
+              <p className="text-sm text-slate-500 font-medium">
                 {complaint.title}
               </p>
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-            <div style={{ textAlign: 'right' }}>
-              <span style={{ display: 'block', fontSize: '0.65rem', fontWeight: 700, color: '#9ca3af', textTransform: 'uppercase' }}>Status</span>
-              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#111827' }}>{complaint.status}</span>
+          <div className="flex gap-10 items-center w-full lg:w-auto border-t lg:border-t-0 pt-6 lg:pt-0 border-slate-100">
+            <div className="flex-1 lg:flex-none">
+              <span className="block text-[0.6rem] font-black text-slate-400 uppercase tracking-widest mb-1">Status</span>
+              <span className="text-sm font-bold text-slate-900">{complaint.status}</span>
             </div>
-            <div style={{ textAlign: 'right' }}>
-              <span style={{ display: 'block', fontSize: '0.65rem', fontWeight: 700, color: '#9ca3af', textTransform: 'uppercase' }}>Created</span>
-              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#111827' }}>{new Date(complaint.createdAt).toLocaleDateString()}</span>
+            <div className="flex-1 lg:flex-none">
+              <span className="block text-[0.6rem] font-black text-slate-400 uppercase tracking-widest mb-1">Created</span>
+              <span className="text-sm font-bold text-slate-900">{new Date(complaint.createdAt).toLocaleDateString()}</span>
             </div>
           </div>
         </div>
+
 
         {/* Chat Component */}
         <ChatWindow 

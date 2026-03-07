@@ -65,44 +65,43 @@ const CustomerDashboard = () => {
   });
 
   return (
-    <div style={{ minHeight:'100vh', background:'#060f1e', display:'flex', flexDirection:'column', fontFamily:"'Inter',system-ui,sans-serif" }}>
+    <div className="min-h-screen bg-[#060f1e] flex flex-col font-sans">
       <Navbar />
-      <div style={{ maxWidth:'80rem', margin:'0 auto', width:'100%', padding:'2rem 1.25rem' }}>
+      <div className="max-w-[80rem] mx-auto w-full px-5 py-8 sm:py-10">
         {/* Header */}
-        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:'2rem', flexWrap:'wrap', gap:'1rem' }}>
+        <div className="flex flex-col sm:flex-row justify-between items-start mb-8 gap-6 sm:gap-4">
           <div>
-            <h1 style={{ margin:0, fontSize:'1.6rem', fontWeight:800, color:'#f1f5f9', letterSpacing:'-0.03em' }}>My Complaints</h1>
-            <p style={{ margin:'0.3rem 0 0', color:'rgba(241,245,249,0.45)', fontSize:'0.875rem' }}>
-              Welcome, <strong style={{ color:'rgba(241,245,249,0.8)' }}>{user?.name}</strong>
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-50 tracking-tight">My Complaints</h1>
+            <p className="text-sm text-slate-500 mt-1.5">
+              Welcome, <strong className="text-slate-300">{user?.name}</strong>
             </p>
           </div>
-          <button onClick={() => navigate('/chatbot')} style={{
-            display:'flex', alignItems:'center', gap:'0.5rem',
-            background:'#2979d0', color:'white', border:'none',
-            padding:'0.75rem 1.5rem', borderRadius:'0.75rem', fontWeight:700,
-            fontSize:'0.9rem', cursor:'pointer',
-            boxShadow:'0 4px 20px rgba(41,121,208,0.35)',
-            transition:'background 0.2s, transform 0.2s',
-          }}
-            onMouseOver={e => { e.currentTarget.style.background='#1b4d89'; e.currentTarget.style.transform='translateY(-1px)'; }}
-            onMouseOut={e => { e.currentTarget.style.background='#2979d0'; e.currentTarget.style.transform='translateY(0)'; }}
+          <button 
+            onClick={() => navigate('/chatbot')} 
+            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-govAccent hover:bg-govDark text-white border-none py-3 px-6 rounded-xl font-bold text-sm cursor-pointer shadow-lg shadow-govAccent/20 transition-all hover:-translate-y-0.5"
           >
             <Plus size={18} /> New Complaint
           </button>
         </div>
 
         {/* Tabs */}
-        <div style={{ display:'flex', gap:0, borderBottom:'1px solid rgba(255,255,255,0.07)', marginBottom:'1.5rem', overflowX:'auto' }}>
+        <div className="flex gap-0 border-b border-white/10 mb-6 overflow-x-auto no-scrollbar scroll-smooth">
           {tabs.map(t => (
-            <button key={t.key} onClick={() => setActiveTab(t.key)} style={tabStyle(activeTab === t.key)}>
+            <button 
+              key={t.key} 
+              onClick={() => setActiveTab(t.key)} 
+              className={`px-5 py-3 text-sm font-bold border-none cursor-pointer bg-transparent transition-all whitespace-nowrap relative ${
+                activeTab === t.key ? 'text-blue-400' : 'text-slate-500'
+              }`}
+            >
               {t.label}
               {t.count > 0 && (
-                <span style={{
-                  marginLeft:'0.5rem', padding:'0.1rem 0.5rem', borderRadius:'999px',
-                  fontSize:'0.7rem', fontWeight:800,
-                  background: activeTab === t.key ? '#2979d0' : 'rgba(255,255,255,0.08)',
-                  color: activeTab === t.key ? 'white' : 'rgba(241,245,249,0.4)',
-                }}>{t.count}</span>
+                <span className={`ml-2 px-1.5 py-0.5 rounded-full text-[0.65rem] font-black ${
+                  activeTab === t.key ? 'bg-govAccent text-white' : 'bg-white/10 text-slate-500'
+                }`}>{t.count}</span>
+              )}
+              {activeTab === t.key && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-govAccent" />
               )}
             </button>
           ))}
@@ -110,53 +109,49 @@ const CustomerDashboard = () => {
 
         {/* Content */}
         {loading ? (
-          <div style={{ display:'flex', justifyContent:'center', padding:'5rem 0' }}>
+          <div className="flex justify-center py-20">
             <div className="spinner" />
           </div>
         ) : filtered.length === 0 ? (
-          <div style={{
-            textAlign:'center', padding:'5rem 2rem',
-            background:'rgba(255,255,255,0.03)',
-            borderRadius:'1rem', border:'1px dashed rgba(255,255,255,0.1)',
-          }}>
-            <div style={{ fontSize:'3rem', marginBottom:'1rem' }}>💧</div>
-            <h3 style={{ color:'#f1f5f9', marginBottom:'0.5rem' }}>No complaints found</h3>
-            <p style={{ color:'rgba(241,245,249,0.4)', marginBottom:'1.5rem', fontSize:'0.875rem' }}>
+          <div className="text-center py-20 px-6 bg-white/[0.02] rounded-2xl border border-dashed border-white/10">
+            <div className="text-5xl mb-4">💧</div>
+            <h3 className="text-slate-50 font-bold mb-2">No complaints found</h3>
+            <p className="text-slate-500 text-sm mb-6 max-w-xs mx-auto">
               Start a chat with Jal Sahayak AI to register a complaint
             </p>
-            <button onClick={() => navigate('/chatbot')} style={{ background:'#2979d0', color:'white', border:'none', padding:'0.75rem 1.5rem', borderRadius:'0.625rem', fontWeight:700, cursor:'pointer' }}>
+            <button 
+              onClick={() => navigate('/chatbot')} 
+              className="bg-govAccent text-white border-none py-3 px-6 rounded-xl font-bold text-sm cursor-pointer"
+            >
               Chat with AI
             </button>
           </div>
         ) : (
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(280px, 1fr))', gap:'1.25rem' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {filtered.map(c => (
-              <div key={c._id} style={{ display:'flex', flexDirection:'column', gap:'0.5rem' }}>
+              <div key={c._id} className="flex flex-col gap-2 group">
                 <ComplaintCard complaint={c} />
-                <div style={{ display:'flex', gap:'0.5rem' }}>
-                  <button onClick={() => navigate(`/complaint/${c._id}`)} style={{
-                    flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'0.4rem',
-                    border:'1.5px solid #1b4d89', color:'#1b4d89', background:'white',
-                    padding:'0.5rem', borderRadius:'0.5rem', fontSize:'0.78rem', fontWeight:700, cursor:'pointer',
-                  }}>
-                    <MessageCircle size={13} /> Chat
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => navigate(`/complaint/${c._id}`)} 
+                    className="flex-1 flex items-center justify-center gap-2 border-1.5 border-govDark text-govDark bg-white py-2.5 rounded-lg text-xs font-bold cursor-pointer transition-colors hover:bg-slate-50"
+                  >
+                    <MessageCircle size={14} /> Chat
                   </button>
                   {c.status === 'RESOLVED' && !c.feedback?.rating && (
-                    <button onClick={() => setFeedbackModal(c._id)} style={{
-                      flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'0.4rem',
-                      border:'1.5px solid #f59e0b', color:'#b45309', background:'white',
-                      padding:'0.5rem', borderRadius:'0.5rem', fontSize:'0.78rem', fontWeight:700, cursor:'pointer',
-                    }}>
-                      <Star size={13} /> Feedback
+                    <button 
+                      onClick={() => setFeedbackModal(c._id)} 
+                      className="flex-1 flex items-center justify-center gap-2 border-1.5 border-amber-500 text-amber-700 bg-white py-2.5 rounded-lg text-xs font-bold cursor-pointer transition-colors hover:bg-slate-50"
+                    >
+                      <Star size={14} /> Feedback
                     </button>
                   )}
                   {c.status === 'RESOLVED' && (
-                    <button onClick={() => handleReopen(c._id)} style={{
-                      flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'0.4rem',
-                      border:'1.5px solid #f97316', color:'#c2410c', background:'white',
-                      padding:'0.5rem', borderRadius:'0.5rem', fontSize:'0.78rem', fontWeight:700, cursor:'pointer',
-                    }}>
-                      <RefreshCw size={13} /> Reopen
+                    <button 
+                      onClick={() => handleReopen(c._id)} 
+                      className="flex-1 flex items-center justify-center gap-2 border-1.5 border-orange-500 text-orange-700 bg-white py-2.5 rounded-lg text-xs font-bold cursor-pointer transition-colors hover:bg-slate-50"
+                    >
+                      <RefreshCw size={14} /> Reopen
                     </button>
                   )}
                 </div>
@@ -168,36 +163,43 @@ const CustomerDashboard = () => {
 
       {/* Feedback Modal */}
       {feedbackModal && (
-        <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.55)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:1000, padding:'1rem' }}>
-          <div style={{ background:'white', borderRadius:'1.25rem', padding:'2rem', maxWidth:'28rem', width:'100%', boxShadow:'0 20px 60px rgba(0,0,0,0.3)' }}>
-            <h2 style={{ margin:'0 0 0.3rem', fontSize:'1.25rem', fontWeight:800, color:'#0f2f57' }}>Rate Your Experience</h2>
-            <p style={{ margin:'0 0 1.5rem', color:'#6b7280', fontSize:'0.85rem' }}>How was our water department's service?</p>
-            <div style={{ display:'flex', justifyContent:'center', gap:'0.75rem', marginBottom:'1.5rem' }}>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[1000] p-4 animate-fadeIn">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-2xl animate-heroFadeUp">
+            <h2 className="text-xl sm:text-2xl font-black text-govDark mb-1">Rate Experience</h2>
+            <p className="text-slate-500 text-sm mb-6">How was our water department's service?</p>
+            
+            <div className="flex justify-center gap-3 mb-8">
               {[1,2,3,4,5].map(s => (
-                <button key={s} onClick={() => setRating(s)} style={{
-                  background:'none', border:'none', cursor:'pointer', fontSize:'2.25rem',
-                  filter: s <= rating ? 'none' : 'grayscale(1) opacity(0.3)',
-                  transition:'transform 0.1s', transform: s <= rating ? 'scale(1.15)' : 'scale(1)',
-                }}>⭐</button>
+                <button 
+                  key={s} 
+                  onClick={() => setRating(s)} 
+                  className={`text-4xl bg-transparent border-none cursor-pointer transition-all ${
+                    s <= rating ? 'scale-110 grayscale-0' : 'scale-100 grayscale opacity-30 shadow-none'
+                  }`}
+                >⭐</button>
               ))}
             </div>
-            <textarea value={feedbackMsg} onChange={e => setFeedbackMsg(e.target.value)}
+
+            <textarea 
+              value={feedbackMsg} 
+              onChange={e => setFeedbackMsg(e.target.value)}
               placeholder="Share your comments (optional)"
-              rows={3} style={{
-                width:'100%', boxSizing:'border-box', padding:'0.75rem',
-                border:'1.5px solid #e5e7eb', borderRadius:'0.5rem', resize:'vertical',
-                fontSize:'0.875rem', marginBottom:'1rem', outline:'none',
-              }}
+              rows={3} 
+              className="w-full box-border px-4 py-3 border border-slate-200 rounded-xl resize-none text-sm mb-6 outline-none focus:border-govAccent transition-colors"
             />
-            <div style={{ display:'flex', gap:'0.75rem' }}>
-              <button onClick={() => { setFeedbackModal(null); setRating(0); }} style={{
-                flex:1, padding:'0.75rem', border:'1.5px solid #e5e7eb', borderRadius:'0.625rem',
-                background:'white', cursor:'pointer', fontWeight:600, color:'#6b7280',
-              }}>Cancel</button>
-              <button onClick={handleFeedback} disabled={!rating} style={{
-                flex:1, padding:'0.75rem', background: rating ? '#1b4d89' : '#9ca3af',
-                color:'white', border:'none', borderRadius:'0.625rem', fontWeight:700, cursor: rating ? 'pointer' : 'not-allowed',
-              }}>Submit</button>
+
+            <div className="flex gap-4">
+              <button 
+                onClick={() => { setFeedbackModal(null); setRating(0); }} 
+                className="flex-1 py-3 border border-slate-200 rounded-xl bg-white text-slate-500 font-bold text-sm cursor-pointer hover:bg-slate-50 transition-colors"
+              >Cancel</button>
+              <button 
+                onClick={handleFeedback} 
+                disabled={!rating} 
+                className={`flex-1 py-3 rounded-xl text-white font-bold text-sm cursor-pointer transition-all ${
+                  rating ? 'bg-govDark shadow-lg shadow-govDark/20' : 'bg-slate-300 cursor-not-allowed'
+                }`}
+              >Submit</button>
             </div>
           </div>
         </div>
