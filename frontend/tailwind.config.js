@@ -20,9 +20,14 @@ export default {
           900: '#0c4a6e',
           950: '#082f49',
         },
-        govBlue: '#1b4d89',
-        govLight: '#f3f4f6',
-      }
+        govBlue:   '#1b4d89',
+        govLight:  '#f3f4f6',
+        govDark:   '#0f2f57',
+        govAccent: '#2979d0',
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      },
     },
   },
   plugins: [],

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, LayoutDashboard, LogOut, User } from 'lucide-react';
 
 const Navbar = () => {
@@ -24,130 +21,187 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   };
 
+  const navStyle = {
+    position: 'sticky',
+    top: 0,
+    zIndex: 200,
+    background: scrolled ? 'rgba(10,25,50,0.97)' : 'rgba(10,25,50,0.93)',
+    backdropFilter: 'blur(12px)',
+    borderBottom: scrolled ? '1px solid rgba(41,121,208,0.25)' : '1px solid rgba(255,255,255,0.06)',
+    transition: 'all 0.3s',
+  };
+
   return (
-    <nav className={`sticky top-0 z-[200] transition-all duration-300 ${
-      scrolled ? 'bg-[#0a1932]/96 backdrop-blur-md border-b border-govAccent/25' : 'bg-[#0a1932]/92 backdrop-blur-sm border-b border-white/5'
-    }`}>
-      <div className="max-w-[82rem] mx-auto px-6 h-16 flex justify-between items-center">
-        
-        {/* Brand / Logo */}
-        <Link to="/" className="flex items-center gap-3 no-underline" onClick={() => setMobileMenuOpen(false)}>
-          <img 
-            src="/logo.jpg" 
-            alt="Jal Sahayak Logo" 
-            className="w-[42px] h-[42px] rounded-full object-cover border border-white/10"
+    <nav style={navStyle}>
+      {/* ── Main Bar ───────────────────────────────────────────────── */}
+      <div style={{
+        maxWidth: '82rem', margin: '0 auto', padding: '0 1.25rem',
+        height: '64px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      }}>
+        {/* Brand */}
+        <Link
+          to="/"
+          onClick={() => setMobileMenuOpen(false)}
+          style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}
+        >
+          <img
+            src="/logo.jpg"
+            alt="Jal Sahayak Logo"
+            style={{ width: 40, height: 40, borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(255,255,255,0.15)' }}
           />
-          <div className="hidden sm:block">
-            <div className="font-extrabold text-base text-white tracking-tight leading-none">
+          <div>
+            <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'white', lineHeight: 1.2, letterSpacing: '-0.01em' }}>
               Jal Sahayak
             </div>
-            <div className="text-[0.6rem] color-govAccent/90 font-semibold tracking-widest uppercase mt-0.5">
+            <div style={{ fontSize: '0.55rem', color: 'rgba(41,121,208,0.85)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em' }}>
               AI · Water Services
             </div>
           </div>
-          {/* Mobile minimal title */}
-          <div className="sm:hidden font-extrabold text-base text-white tracking-tight">
-            Jal Sahayak
-          </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-3">
+        {/* Desktop Nav — hidden on mobile */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }} className="desktop-nav">
+          <style>{`.desktop-nav { display: flex !important; } @media (max-width: 767px) { .desktop-nav { display: none !important; } }`}</style>
           {user ? (
             <>
               <Link
                 to={user.role === 'respondent' ? '/respondent-dashboard' : '/customer-dashboard'}
-                className="text-white/75 no-underline text-sm font-medium px-3.5 py-1.5 rounded-lg transition-all hover:text-white hover:bg-white/10 flex items-center gap-2"
+                style={{
+                  color: 'rgba(255,255,255,0.75)', textDecoration: 'none', fontSize: '0.875rem',
+                  fontWeight: 600, padding: '0.375rem 0.875rem', borderRadius: '0.5rem', display: 'flex',
+                  alignItems: 'center', gap: '0.375rem', transition: 'all 0.15s',
+                }}
+                onMouseOver={e => { e.currentTarget.style.color = 'white'; e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
+                onMouseOut={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.75)'; e.currentTarget.style.background = 'transparent'; }}
               >
-                <LayoutDashboard size={14} />
-                Dashboard
+                <LayoutDashboard size={14} /> Dashboard
               </Link>
 
-              <span className={`text-[0.65rem] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider border ${
-                user.role === 'respondent' 
-                  ? 'bg-yellow-500/15 text-yellow-300 border-yellow-500/30' 
-                  : 'bg-green-500/15 text-green-400 border-green-500/30'
-              }`}>
+              <span style={{
+                fontSize: '0.6rem', fontWeight: 800, padding: '0.2rem 0.6rem', borderRadius: '999px',
+                textTransform: 'uppercase', letterSpacing: '0.08em',
+                background: user.role === 'respondent' ? 'rgba(234,179,8,0.15)' : 'rgba(34,197,94,0.15)',
+                color: user.role === 'respondent' ? '#fde047' : '#4ade80',
+                border: `1px solid ${user.role === 'respondent' ? 'rgba(234,179,8,0.3)' : 'rgba(34,197,94,0.3)'}`,
+              }}>
                 {user.role === 'respondent' ? 'Staff' : 'Citizen'}
               </span>
 
-              <div className="w-[1px] h-6 bg-white/15 mx-1" />
+              <div style={{ width: 1, height: 24, background: 'rgba(255,255,255,0.15)' }} />
 
-              <span className="text-sm text-white/60 font-medium flex items-center gap-2">
-                <User size={14} />
-                {user.name?.split(' ')[0]}
+              <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.55)', display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+                <User size={14} /> {user.name?.split(' ')[0]}
               </span>
 
-              <button
-                onClick={logout}
-                className="bg-transparent text-red-400 border border-red-400/40 px-3.5 py-1.5 rounded-lg text-sm font-semibold cursor-pointer transition-all hover:bg-red-600/15 hover:border-red-400 flex items-center gap-2"
+              <button onClick={logout} style={{
+                background: 'transparent', color: '#f87171', border: '1px solid rgba(248,113,113,0.35)',
+                padding: '0.375rem 0.875rem', borderRadius: '0.5rem', fontSize: '0.875rem', fontWeight: 600,
+                cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.375rem', transition: 'all 0.15s',
+              }}
+                onMouseOver={e => { e.currentTarget.style.background = 'rgba(239,68,68,0.12)'; e.currentTarget.style.borderColor = '#f87171'; }}
+                onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.35)'; }}
               >
-                <LogOut size={14} />
-                Logout
+                <LogOut size={14} /> Logout
               </button>
             </>
           ) : (
-            <Link to="/" className="bg-[#2979d0] hover:bg-[#1b4d89] text-white px-5 py-2 rounded-lg font-semibold text-sm no-underline transition-colors shrink-0">
+            <Link to="/" style={{
+              background: '#2979d0', color: 'white', padding: '0.5rem 1.25rem',
+              borderRadius: '0.5rem', fontWeight: 600, fontSize: '0.875rem', textDecoration: 'none',
+            }}>
               Sign In
             </Link>
           )}
         </div>
 
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden text-white/80 p-2 rounded-lg hover:bg-white/10 transition-colors"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        {/* Hamburger — mobile only */}
+        <button
+          onClick={() => setMobileMenuOpen(m => !m)}
+          className="hamburger-btn"
+          style={{
+            background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.85)',
+            padding: '0.5rem', borderRadius: '0.5rem', cursor: 'pointer', display: 'none',
+          }}
         >
+          <style>{`.hamburger-btn { display: none !important; } @media (max-width: 767px) { .hamburger-btn { display: flex !important; align-items: center; justify-content: center; } }`}</style>
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Drawer */}
-      <div className={`md:hidden fixed inset-x-0 top-16 bg-[#0a1932]/98 backdrop-blur-xl border-b border-white/10 overflow-hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="p-6 flex flex-col gap-4">
+      {/* ── Mobile Drawer ──────────────────────────────────────────── */}
+      <div style={{
+        overflow: 'hidden',
+        maxHeight: mobileMenuOpen ? '500px' : '0px',
+        opacity: mobileMenuOpen ? 1 : 0,
+        transition: 'max-height 0.3s ease, opacity 0.25s ease',
+        background: 'rgba(8,18,38,0.99)',
+        borderTop: '1px solid rgba(255,255,255,0.07)',
+      }} className="mobile-drawer">
+        <style>{`@media (min-width: 768px) { .mobile-drawer { display: none !important; } }`}</style>
+        <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           {user ? (
             <>
-              <div className="flex items-center justify-between pb-4 border-b border-white/5">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-govAccent/20 flex items-center justify-center text-govAccent border border-govAccent/30">
+              {/* User info row */}
+              <div style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                paddingBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.07)',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <div style={{
+                    width: 40, height: 40, borderRadius: '50%',
+                    background: 'rgba(41,121,208,0.2)', display: 'flex', alignItems: 'center',
+                    justifyContent: 'center', color: '#60a5fa', border: '1px solid rgba(41,121,208,0.3)',
+                  }}>
                     <User size={20} />
                   </div>
                   <div>
-                    <div className="text-white font-semibold text-sm">{user.name}</div>
-                    <div className="text-white/40 text-xs capitalize">{user.role}</div>
+                    <div style={{ color: 'white', fontWeight: 600, fontSize: '0.9rem' }}>{user.name}</div>
+                    <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', textTransform: 'capitalize' }}>{user.role}</div>
                   </div>
                 </div>
-                <span className={`text-[0.6rem] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider border ${
-                  user.role === 'respondent' 
-                    ? 'bg-yellow-500/15 text-yellow-300 border-yellow-500/30' 
-                    : 'bg-green-500/15 text-green-400 border-green-500/30'
-                }`}>
+                <span style={{
+                  fontSize: '0.6rem', fontWeight: 800, padding: '0.2rem 0.6rem', borderRadius: '999px',
+                  textTransform: 'uppercase', letterSpacing: '0.08em',
+                  background: user.role === 'respondent' ? 'rgba(234,179,8,0.15)' : 'rgba(34,197,94,0.15)',
+                  color: user.role === 'respondent' ? '#fde047' : '#4ade80',
+                  border: `1px solid ${user.role === 'respondent' ? 'rgba(234,179,8,0.3)' : 'rgba(34,197,94,0.3)'}`,
+                }}>
                   {user.role === 'respondent' ? 'Staff' : 'Citizen'}
                 </span>
               </div>
-              
+
+              {/* Dashboard Link */}
               <Link
                 to={user.role === 'respondent' ? '/respondent-dashboard' : '/customer-dashboard'}
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-white/80 no-underline text-base font-medium p-3 rounded-xl bg-white/5 hover:bg-white/10 flex items-center gap-3 transition-colors"
+                style={{
+                  color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: '1rem', fontWeight: 600,
+                  padding: '0.875rem 1rem', borderRadius: '0.75rem', background: 'rgba(255,255,255,0.05)',
+                  display: 'flex', alignItems: 'center', gap: '0.75rem',
+                }}
               >
-                <LayoutDashboard size={20} />
-                Dashboard
+                <LayoutDashboard size={20} /> Dashboard
               </Link>
 
-              <button
-                onClick={logout}
-                className="w-full bg-red-600/10 text-red-400 border border-red-500/20 p-3 rounded-xl text-base font-semibold cursor-pointer flex items-center gap-3"
-              >
-                <LogOut size={20} />
-                Logout
+              {/* Logout */}
+              <button onClick={logout} style={{
+                background: 'rgba(239,68,68,0.08)', color: '#f87171',
+                border: '1px solid rgba(239,68,68,0.2)', padding: '0.875rem 1rem',
+                borderRadius: '0.75rem', fontSize: '1rem', fontWeight: 600,
+                cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.75rem', width: '100%',
+              }}>
+                <LogOut size={20} /> Logout
               </button>
             </>
           ) : (
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full bg-[#2979d0] hover:bg-[#1b4d89] text-white p-3 rounded-xl font-bold text-center no-underline transition-colors shadow-lg shadow-blue-900/20"
+              style={{
+                background: '#2979d0', color: 'white', padding: '0.875rem',
+                borderRadius: '0.75rem', fontWeight: 700, textAlign: 'center', textDecoration: 'none',
+                display: 'block', fontSize: '1rem',
+              }}
             >
               Sign In
             </Link>
